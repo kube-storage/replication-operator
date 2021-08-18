@@ -146,6 +146,14 @@ func main() {
 		os.Exit(1)
 	}
 
+	if err = (&replicationv1alpha1.VolumeReplication{}).SetupWebhookWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create webhook", "webhook", "VolumeReplication")
+		os.Exit(1)
+	}
+	if err = (&replicationv1alpha1.VolumeReplicationClass{}).SetupWebhookWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create webhook", "webhook", "VolumeReplicationClass")
+		os.Exit(1)
+	}
 	// +kubebuilder:scaffold:builder
 
 	if err := mgr.AddHealthzCheck("health", healthz.Ping); err != nil {
